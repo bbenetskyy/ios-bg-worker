@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
              xmlns:sample="clr-namespace:sample;assembly=sample"
+             xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             iOsSpecific:Page.UseSafeArea="true"
              x:Class="sample.MainPage" x:DataType="sample:MainPageViewModel">
 
     <StackLayout>
@@ -11,16 +13,18 @@
                    effects:TouchEffect.NativeAnimation="True"
                    effects:TouchEffect.Command="{Binding StartUpdatesCommand}"/>
         </Frame>
-        <StackLayout BindableLayout.ItemsSource="{Binding LocationUpdates}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="x:String">
-                    <Label Text="{Binding .}"
-                           BackgroundColor="Black"
-                           TextColor="White"
-                           FontSize="Header"/>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout BindableLayout.ItemsSource="{Binding LocationUpdates}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Label Text="{Binding .}"
+                               BackgroundColor="Black"
+                               TextColor="White"
+                               FontSize="Header"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
     </StackLayout>
 
 </ContentPage>

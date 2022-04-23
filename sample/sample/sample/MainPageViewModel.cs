@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -9,21 +10,34 @@ namespace sample;
 public class MainPageViewModel
 {
     private readonly ILocationBackgroundWorker _locationBackgroundWorker;
+    private readonly IBackgroundWorker _backgroundWorker;
     private readonly IPermissionHandler _permissionHandler;
 
-    public ICommand StartUpdatesCommand { get; }
+    public ICommand StartUpdatesCommand { get; private set; }
 
     public ObservableCollection<string> LocationUpdates { get; }
 
     public MainPageViewModel(
         ILocationBackgroundWorker locationBackgroundWorker,
+        IBackgroundWorker backgroundWorker,
         IPermissionHandler permissionHandler)
     {
         _locationBackgroundWorker = locationBackgroundWorker;
+        _backgroundWorker = backgroundWorker;
         _permissionHandler = permissionHandler;
         _locationBackgroundWorker.LocationUpdated+= LocationBackgroundWorkerOnLocationUpdated;
         StartUpdatesCommand = new Command(ExecuteStartUpdates);
         LocationUpdates = new ObservableCollection<string>();
+        _backgroundWorker.StartWorker(BackgroundWork);
+    }
+
+    private Task BackgroundWork()
+    {
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            LocationUpdates.Add($"Background Work Update {DateTime.Now.ToString("hh:mm:ss")}");
+        });
+        return Task.CompletedTask;
     }
 
     private void LocationBackgroundWorkerOnLocationUpdated(object sender, Location e)
@@ -39,6 +53,7 @@ public class MainPageViewModel
 
     private void ExecuteStartUpdates()
     {
+        StartUpdatesCommand = null;
         _permissionHandler.RequestPermission<Permissions.LocationAlways>();
         _locationBackgroundWorker.StartLocationUpdates(TimeSpan.FromSeconds(5));
     }

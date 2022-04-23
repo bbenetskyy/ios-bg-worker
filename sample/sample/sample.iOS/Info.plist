@@ -45,5 +45,9 @@
         <string>location</string>
         <string>fetch</string>
     </array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.companyname.sample.refresh</string>
+    </array>
 </dict>
 </plist>
