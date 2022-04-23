@@ -21,7 +21,7 @@
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>MinimumOSVersion</key>
-    <string>8.0</string>
+    <string>11.0</string>
     <key>CFBundleDisplayName</key>
     <string>sample</string>
     <key>CFBundleIdentifier</key>
@@ -34,5 +34,16 @@
     <string>sample</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need access to your location because ...</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need to track your location because ...</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need to track your location because ...</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>location</string>
+        <string>fetch</string>
+    </array>
 </dict>
 </plist>
