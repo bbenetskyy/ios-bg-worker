@@ -22,6 +22,11 @@ namespace sample.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            
+            App.Container.Register<MainPageViewModel>();
+            App.Container.RegisterSingleton<IPermissionHandler, PermissionHandler>();
+            App.Container.RegisterSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
+            
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
