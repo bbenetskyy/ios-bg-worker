@@ -1,4 +1,5 @@
 ﻿using System;
+using SimpleInjector;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -6,6 +7,10 @@ namespace sample
 {
     public partial class App : Application
     {
+        private static Container _container;
+
+        public static Container Container => _container ??= new Container();
+        
         public App ()
         {
             InitializeComponent();
