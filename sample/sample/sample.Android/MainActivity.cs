@@ -17,15 +17,20 @@ public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompa
         Xamarin.Essentials.Platform.Init(this, savedInstanceState);
         global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
         
-            
+        RegisterIoC();
+
+        LoadApplication(new App());
+    }
+
+    public static void RegisterIoC()
+    {
         App.Container.RegisterSingleton<MainPageViewModel>();
         App.Container.RegisterSingleton<IPermissionHandler, PermissionHandler>();
         App.Container.RegisterSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
         App.Container.RegisterSingleton<IBackgroundWorker, BackgroundWorker>();
         App.Container.RegisterSingleton<IRegionMonitor, RegionMonitor>();
-        
-        LoadApplication(new App());
     }
+
     public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
     {
         Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

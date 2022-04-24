@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreLocation;
 using UIKit;
+using Xamarin.Essentials;
 
 namespace sample.iOS;
 
@@ -49,6 +50,13 @@ public class RegionMonitor : IRegionMonitor
                 }
             );
         }
+    }
+
+    public void MonitorRegion(Location location)
+    {
+        //this is not the best interface, because
+        //ios is quite different from android
+        //and for ios we don't need that at all
     }
 
     protected virtual void OnMonitorNotifications(string e)

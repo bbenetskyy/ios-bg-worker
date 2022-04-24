@@ -36,6 +36,7 @@ using Android.App;
 [assembly: UsesPermission(Android.Manifest.Permission.ControlLocationUpdates)]
 [assembly: UsesPermission(Android.Manifest.Permission.AccessWifiState)]
 [assembly: UsesPermission(Android.Manifest.Permission.ForegroundService)]
+[assembly: UsesPermission(Android.Manifest.Permission.ReceiveBootCompleted)]
 
 [assembly: UsesFeature("android.hardware.location", Required = true)]
 [assembly: UsesFeature("android.hardware.location.gps", Required = true)]

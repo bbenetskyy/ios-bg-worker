@@ -25,6 +25,7 @@ public class LocationBackgroundService : Service
     private const string SERVICE_NOTIFICATION_CHANNEL_ID = "5061";
     
     private readonly ILocationBackgroundWorker _locationBackgroundWorker;
+    private readonly IRegionMonitor _regionMonitor;
 
     private bool _workerActive;
     private CancellationTokenSource _cancellationTokenSource;
@@ -32,6 +33,7 @@ public class LocationBackgroundService : Service
     public LocationBackgroundService()
     {
         _locationBackgroundWorker = App.Container.GetInstance<ILocationBackgroundWorker>();
+        _regionMonitor = App.Container.GetInstance<IRegionMonitor>();
     }
     
      public override IBinder OnBind(Intent intent)
@@ -66,6 +68,7 @@ public class LocationBackgroundService : Service
                 if (location != null)
                 {
                     ((LocationBackgroundWorker) _locationBackgroundWorker).OnLocationUpdated(location);
+                    _regionMonitor.MonitorRegion(location);
                 }
             }
         });

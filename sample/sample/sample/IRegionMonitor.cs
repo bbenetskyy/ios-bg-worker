@@ -1,4 +1,5 @@
 using System;
+using Xamarin.Essentials;
 
 namespace sample;
 
@@ -14,4 +15,9 @@ public interface IRegionMonitor
     //according to your requirements ;)
 
     void StartRegionUpdates();
+
+    /// <summary>
+    /// Monitor Region Enter or Exit Actions
+    /// </summary>
+    void MonitorRegion(Location location);
 }

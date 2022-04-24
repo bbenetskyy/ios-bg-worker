@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -61,6 +63,7 @@
   <ItemGroup>
     <Compile Include="BackgroundService.cs" />
     <Compile Include="BackgroundWorker.cs" />
+    <Compile Include="BootCompleteReceiver.cs" />
     <Compile Include="LocationBackgroundService.cs" />
     <Compile Include="LocationBackgroundWorker.cs" />
     <Compile Include="MainActivity.cs" />
@@ -94,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sample\sample.csproj">
-      <Project>{C2B1AE77-76C0-410D-B8B6-D205B3E5D1C4}</Project>
+      <Project>{543F296F-6836-4090-932E-0E6F93A051F8}</Project>
       <Name>sample</Name>
     </ProjectReference>
   </ItemGroup>
