@@ -34,8 +34,16 @@ public class LocationBackgroundWorker : ILocationBackgroundWorker
     /// </summary>
     public event EventHandler<Location> LocationUpdated;
 
+    /// <summary>
+    /// Event Raised when BG Worker has been Stopped
+    /// </summary>
+    public event EventHandler WorkerStopped;
+
+    public TimeSpan Interval { get; private set; }
+
     public void StartLocationUpdates(TimeSpan interval)
     {
+        Interval = interval;
         _locMgr = new CLLocationManager();
         _locMgr.PausesLocationUpdatesAutomatically = false;
 
@@ -59,7 +67,7 @@ public class LocationBackgroundWorker : ILocationBackgroundWorker
                 _locMgr.LocationsUpdated += (_, args) =>
                 {
                     _lastKnownLocation = args.Locations.Last();
-                    if (DateTime.UtcNow - _lastUpdatedTime > interval)
+                    if (DateTime.UtcNow - _lastUpdatedTime > Interval)
                     {
                         _lastUpdatedTime = DateTime.UtcNow;
                         OnLocationUpdated(new(
@@ -72,8 +80,18 @@ public class LocationBackgroundWorker : ILocationBackgroundWorker
         }
     }
 
+    public void StopWorker()
+    {
+        _locMgr.StopUpdatingLocation();
+    }
+
     protected virtual void OnLocationUpdated(Location e)
     {
         LocationUpdated?.Invoke(this, e);
+    }
+
+    protected virtual void OnWorkerStopped()
+    {
+        WorkerStopped?.Invoke(this, EventArgs.Empty);
     }
 }

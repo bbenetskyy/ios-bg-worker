@@ -17,12 +17,12 @@ namespace sample.iOS
     {
         private const string REFRESH_IDENTIFIER = "com.companyname.sample.refresh";
         
-        private IBackgroundWorker _synchronisationWorker;
+        private IBackgroundWorker _backgroundWorker;
         /// <summary>
         /// Background Worker to Run Background Updates during Perform Fetch
         /// </summary>
         private IBackgroundWorker BackgroundWorker =>
-            _synchronisationWorker ??= App.Container.GetInstance<IBackgroundWorker>();
+            _backgroundWorker ??= App.Container.GetInstance<IBackgroundWorker>();
         
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
