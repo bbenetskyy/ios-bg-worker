@@ -12,7 +12,7 @@ public class LocationBackgroundWorker : ILocationBackgroundWorker
     /// <summary>
     /// Location Manager Desired Accuracy in meters
     /// </summary>
-    private const int LOC_MGR_DESIRED_ACCURACY = 100;
+    public const int LOC_MGR_DESIRED_ACCURACY = 100;
 
     /// <summary>
     /// Last Known Location from iOS

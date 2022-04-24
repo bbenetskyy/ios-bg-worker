@@ -10,6 +10,7 @@ namespace sample;
 public class MainPageViewModel
 {
     private readonly ILocationBackgroundWorker _locationBackgroundWorker;
+    private readonly IRegionMonitor _regionMonitor;
     private readonly IBackgroundWorker _backgroundWorker;
     private readonly IPermissionHandler _permissionHandler;
 
@@ -19,16 +20,30 @@ public class MainPageViewModel
 
     public MainPageViewModel(
         ILocationBackgroundWorker locationBackgroundWorker,
+        IRegionMonitor regionMonitor,
         IBackgroundWorker backgroundWorker,
         IPermissionHandler permissionHandler)
     {
         _locationBackgroundWorker = locationBackgroundWorker;
+        _regionMonitor = regionMonitor;
         _backgroundWorker = backgroundWorker;
         _permissionHandler = permissionHandler;
+        
         _locationBackgroundWorker.LocationUpdated+= LocationBackgroundWorkerOnLocationUpdated;
+        _regionMonitor.MonitorNotifications += RegionMonitorOnMonitorNotifications;
+        
         StartUpdatesCommand = new Command(ExecuteStartUpdates);
         LocationUpdates = new ObservableCollection<string>();
+        
         _backgroundWorker.StartWorker(BackgroundWork);
+    }
+
+    private void RegionMonitorOnMonitorNotifications(object sender, string e)
+    {
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            LocationUpdates.Add(e);
+        });
     }
 
     private Task BackgroundWork()
@@ -46,7 +61,7 @@ public class MainPageViewModel
         //and log it here, but you can change that and send in even immediately ;)
         Device.BeginInvokeOnMainThread(() =>
         {
-            LocationUpdates.Add($"{e.Latitude} {e.Longitude} {DateTime.Now.ToString("hh:mm:ss")}");
+            LocationUpdates.Add($"Location Updated {e.Latitude:N6} {e.Longitude:N6} {DateTime.Now.ToString("hh:mm:ss")}");
         });
         //todo Add here your API Request
     }
@@ -55,6 +70,7 @@ public class MainPageViewModel
     {
         StartUpdatesCommand = null;
         _permissionHandler.RequestPermission<Permissions.LocationAlways>();
+        _regionMonitor.StartRegionUpdates();
         _locationBackgroundWorker.StartLocationUpdates(TimeSpan.FromSeconds(5));
     }
 }

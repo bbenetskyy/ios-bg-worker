@@ -38,6 +38,7 @@ namespace sample.iOS
             App.Container.RegisterSingleton<IPermissionHandler, PermissionHandler>();
             App.Container.RegisterSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
             App.Container.RegisterSingleton<IBackgroundWorker, BackgroundWorker>();
+            App.Container.RegisterSingleton<IRegionMonitor, RegionMonitor>();
             
             LoadApplication(new App());
             

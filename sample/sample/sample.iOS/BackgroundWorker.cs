@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Foundation;
+using UIKit;
 
 namespace sample.iOS;
 
@@ -11,8 +12,9 @@ public class BackgroundWorker : IBackgroundWorker
     /// <summary>
     /// Timer Cooldown/Delay
     /// </summary>
-    public const double TIMER_COOLDOWN = 15 * 60; //best time according to iOS is from 5 to 15 minutes,
-                                                  //but with 30 minutes it may also work
+    public const double TIMER_COOLDOWN = 5; //5 seconds
+                                            //best time according to iOS is from 5 to 15 minutes,
+                                            //but with 30 minutes it may also work
     
     public event EventHandler WorkerStopped;
     
@@ -32,7 +34,16 @@ public class BackgroundWorker : IBackgroundWorker
 
         _timer = NSTimer.CreateRepeatingScheduledTimer(TIMER_COOLDOWN, async _ =>
         {
+            nint taskId = 0;
+            taskId = UIApplication.SharedApplication.BeginBackgroundTask(() =>
+            {
+                // Time execution limit reached. Stopping the background task
+                UIApplication.SharedApplication.EndBackgroundTask(taskId);
+            });
+ 
             await BackgroundWork();
+ 
+            UIApplication.SharedApplication.EndBackgroundTask(taskId);
         });
     }
     
